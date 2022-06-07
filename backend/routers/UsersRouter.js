@@ -8,6 +8,13 @@ usersRouter.get('/', async (req, res) => {
     res.send(users);
 });
 
+usersRouter.put('/', async(res, req) => {
+    const {_id, fullName, chatId} = req.body;
+
+    await models.User.findByIdAndUpdate(_id, {fullName, chatId})
+    res.status(200).send('user updated')
+})
+
 usersRouter.post('/sendMessage', (req, res) => {
     const { chatId, message} = req.body;
     telegramBot.sendMessage(chatId, message);
